@@ -19,17 +19,27 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello',
-				arr: ['asdfasdf'],
+				arr: [],
 				cont: ''
 			}
 		},
 		onLoad() {
-
+			this.getmsg();
 		},
 		methods: {
 			send:function(){
-				this.arr.push(this.cont);
+				if(this.cont.length > 0){
+					// this.arr.push(this.cont);
+					
+					// 发送到后端
+					this.socket.emit('message', this.cont)
+				}
+			},
+			// 接收信息
+			getmsg: function(){
+				this.socket.on('gbmsg', data => {
+					this.arr.push(data)
+				})
 			}
 		}
 	}
